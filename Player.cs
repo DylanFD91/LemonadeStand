@@ -30,5 +30,9 @@ namespace LemonadeStand_3DayStarter
             string input = Console.ReadLine();
             name = input;
         }
+        public void CreateRecipe()
+        {
+
+        }
     }
 }

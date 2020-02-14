@@ -10,8 +10,10 @@ namespace LemonadeStand_3DayStarter
     {
         static void Main(string[] args)
         {
-            SimulateProgram newGame = new SimulateProgram();
-            newGame.RunGame();
+            //    SimulateProgram newGame = new SimulateProgram();
+            //    newGame.RunGame();   
+            Recipe test = new Recipe();
+
         }
     }
 }

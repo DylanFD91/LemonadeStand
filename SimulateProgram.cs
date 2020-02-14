@@ -157,6 +157,11 @@ namespace LemonadeStand_3DayStarter
                     break;
             }
         }
+        
+        private void SettingUpTheDay()//This just brings the elements together to run in the mid game simulation
+        {
+
+        }
         private void RecipeCreation()
         {
 

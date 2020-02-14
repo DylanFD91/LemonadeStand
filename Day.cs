@@ -6,24 +6,17 @@ using System.Threading.Tasks;
 
 namespace LemonadeStand_3DayStarter
 {
-    class Customer
+    class Day
     {
         // member variables (HAS A)
-        public string preference;
-        public double moneyInWallet;
-        public int chanceToBuy;
 
         // constructor (SPAWNER)
-        public Customer()
+        public Day()
         {
-            
+
         }
 
         // member methods (CAN DO)
-        public void PreferenceSetter()
-        {
-
-        }
 
     }
 }
