@@ -96,7 +96,7 @@ namespace LemonadeStand_3DayStarter
         {
             //DisplayTheDaysWeather();
             StoreVisit();
-            //RecipeCreation();
+            RecipeCreation();
         }
         private void DisplayTheDaysWeather()
         {
@@ -164,7 +164,9 @@ namespace LemonadeStand_3DayStarter
         }
         private void RecipeCreation()
         {
-
+            Recipe newRecipe = new Recipe();
+            newRecipe.CreateRecipe(player1);
+            DisplayCurrentInventoryAndMoney();
         }
 
         private void EndGame()//Wraps the game up and displays what the player made

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LemonadeStand_3DayStarter
 {
-    abstract class Weather
+    public class Weather
     {
         // member variables (HAS A)
         public double temperature;
@@ -18,6 +18,20 @@ namespace LemonadeStand_3DayStarter
 
         }
         // member methods (CAN DO)
-
+        public void MakeSunny()
+        {
+            temperature = new Random().Next(80, 100);
+            condition = "Sunny";
+        }
+        public void MakeCloudy()
+        {
+            temperature = new Random().Next(70, 80);
+            condition = "Cloudy";
+        }
+        public void MakeRainy()
+        {
+            temperature = new Random().Next(60, 70);
+            condition = "Raining";
+        }
     }
 }

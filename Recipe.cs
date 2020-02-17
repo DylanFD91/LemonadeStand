@@ -9,7 +9,6 @@ namespace LemonadeStand_3DayStarter
     class Recipe
     {
         // member variables (HAS A)
-        private string recipeType;
         public int lemonsUsed;
         public int sugarCubesUsed;
         public int iceCubesUsed;
@@ -17,16 +16,14 @@ namespace LemonadeStand_3DayStarter
         // constructor (SPAWNER)
         public Recipe()
         {
-            CreateRecipe();
-            recipeType = "";
-            CreatePitcher();
+
         }
 
         // member methods (CAN DO)
-        public void CreateRecipe()
+        public void CreateRecipe(Player player)
         {
             Console.WriteLine("Lets create a pitcher. How many Lemons would you like to use?");
-            LemonsForRecipe();
+            LemonsForRecipe(player);
 
             Console.WriteLine("How many Sugar Cubes would you like to use?");
             SugarForRecipe();
@@ -34,13 +31,26 @@ namespace LemonadeStand_3DayStarter
             Console.WriteLine("How many Ice Cubes would you like to use?");
             IceForRecipe();
         }
-        public void LemonsForRecipe()
+
+        public void LemonsForRecipe(Player player)
         {
             string lemonInput = Console.ReadLine();
             try
             {
                 lemonsUsed = Int32.Parse(lemonInput);
-                Console.WriteLine(lemonsUsed + " will be used for this recipe");
+                if (lemonsUsed <= player.inventory.lemons.Count)
+                {
+                    Console.WriteLine(lemonsUsed + " will be used for this recipe");
+                    LemonsUsedFromInventory(player);
+                }
+                else
+                {
+                    Console.WriteLine(lemonsUsed + " is to many lemons compared to your inventory please try again.");
+                    Console.ReadLine();
+                    Console.Clear();
+                    Console.WriteLine(player.inventory.lemons.Count + " is how many lemons are in your inventory currently.");
+                    LemonsForRecipe(player);
+                }
             }
             catch(FormatException)
             {
@@ -48,16 +58,36 @@ namespace LemonadeStand_3DayStarter
                 Console.ReadLine();
                 Console.Clear();
                 Console.WriteLine("How many Lemons would you like to use?");
-                LemonsForRecipe();
+                LemonsForRecipe(player);
             }
         }
-        public void SugarForRecipe()
+        public void LemonsUsedFromInventory(Player player)
+        {
+            for (int index = 0; index < lemonsUsed; lemonsUsed--)
+            {
+                player.inventory.lemons.RemoveAt(0);
+            }
+        }
+
+        public void SugarForRecipe(Player player)
         {
             string sugarInput = Console.ReadLine();
             try
             {
                 sugarCubesUsed = Int32.Parse(sugarInput);
-                Console.WriteLine(sugarCubesUsed + " will be used for this recipe");
+                if (sugarCubesUsed <= player.inventory.sugarCubes.Count)
+                {
+                    Console.WriteLine(sugarCubesUsed + " will be used for this recipe");
+                    SugarCubesUsedFromInventory(player);
+                }
+                else
+                {
+                    Console.WriteLine(sugarCubesUsed + " is to many cubes of sugar compared to your inventory please try again.");
+                    Console.ReadLine();
+                    Console.Clear();
+                    Console.WriteLine(player.inventory.sugarCubes.Count + " is how many sugar cubes are in your inventory currently.");
+                    SugarForRecipe(player);
+                }
             }
             catch(FormatException)
             {
@@ -65,16 +95,36 @@ namespace LemonadeStand_3DayStarter
                 Console.ReadLine();
                 Console.ReadLine();
                 Console.WriteLine("How many Sugar Cubes would you like to use?");
-                SugarForRecipe();
+                SugarForRecipe(player);
             }
         }
-        public void IceForRecipe()
+        public void SugarCubesUsedFromInventory(Player player)
+        {
+            for (int index = 0; index < sugarCubesUsed; sugarCubesUsed--)
+            {
+                player.inventory.sugarCubes.RemoveAt(0);
+            }
+        }
+
+        public void IceForRecipe(Player player)
         {
             string iceInput = Console.ReadLine();
             try
             {
                 iceCubesUsed = Int32.Parse(iceInput);
-                Console.WriteLine(iceCubesUsed + " will be used for this recipe");
+                if (iceCubesUsed <= player.inventory.iceCubes.Count)
+                {
+                    Console.WriteLine(iceCubesUsed + " will be used for this recipe");
+                    IceCubesUsedFromInventory(player);
+                }
+                else
+                {
+                    Console.WriteLine(iceCubesUsed + " is to many cubes of ice compared to your inventory please try again.");
+                    Console.ReadLine();
+                    Console.Clear();
+                    Console.WriteLine(player.inventory.iceCubes.Count + " is how many ice cubes are in your inventory currently.");
+                    IceForRecipe(player);
+                }
             }
             catch(FormatException)
             {
@@ -82,38 +132,15 @@ namespace LemonadeStand_3DayStarter
                 Console.ReadLine();
                 Console.ReadLine();
                 Console.WriteLine("How many Ice Cubes would you like to use?");
-                IceForRecipe();
+                IceForRecipe(player);
             }
         }
-        public void DetermineRecipeType()
+        public void IceCubesUsedFromInventory(Player player)
         {
-            if (lemonsUsed >= 4 && lemonsUsed <= 7)//for standard pitcher
+            for (int index = 0; index < iceCubesUsed; iceCubesUsed--)
             {
-                if (sugarCubesUsed >= 7 && sugarCubesUsed <= 10)//for standard pitcher
-                {
-                    recipeType = "Standard Pitcher";
-                }
-                else if (sugarCubesUsed >= 11)
-                {
-                    recipeType = "Sweet Pitcher";
-                }
-                else if (sugarCubesUsed <= 6)
-                {
-                    recipeType = "Sour Pitcher";
-                }
+                player.inventory.iceCubes.RemoveAt(0);
             }
-            else if (lemonsUsed >= 8)
-            {
-
-            }
-            else if (lemonsUsed <=3)
-            {
-
-            }
-        }
-        public Pitcher CreatePitcher()
-        {
-            return null;
         }
     }
 }
