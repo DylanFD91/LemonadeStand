@@ -12,6 +12,8 @@ namespace LemonadeStand_3DayStarter
         Player player1;
         //Player player2; (doing later)
         Store store = new Store();
+        Day day;
+        Pitcher pitcher;
 
         //Constructor(IS A)
         public SimulateProgram()
@@ -21,16 +23,6 @@ namespace LemonadeStand_3DayStarter
         //Methods(CAN DO)
 
         //Frequent used Methods
-        private void DisplayCurrentInventoryAndMoney()//Displays the wallet and inventory of the player
-        {
-            Console.WriteLine("Wallet: $" + player1.wallet.Money);
-            Console.WriteLine("Inventory: ");
-            Console.WriteLine("Lemons: " + player1.inventory.lemons.Count);
-            Console.WriteLine("Sugar Cubes: " + player1.inventory.sugarCubes.Count);
-            Console.WriteLine("Ice Cubes: " + player1.inventory.iceCubes.Count);
-            Console.WriteLine("Cups: " + player1.inventory.cups.Count);
-            Console.ReadLine();
-        }
         private void StorePricesList()
         {
             Console.WriteLine("\nHere is a list of my goods and there current prices:");
@@ -48,7 +40,7 @@ namespace LemonadeStand_3DayStarter
             DisplayRules();
             HowManyPlayers();
             Console.WriteLine("Here is your current inventory and starting cash " + player1.name + ": ");
-            DisplayCurrentInventoryAndMoney();
+            UserInterface.DisplayCurrentInventoryAndMoney(player1);
             Console.WriteLine("\nSince your inventory is empty lets head to the store...");
             Console.ReadLine();
             Console.Clear();
@@ -90,18 +82,20 @@ namespace LemonadeStand_3DayStarter
             Console.Clear();
         }
         
-
-
         private void MidGame()//Has the methods for the core of the game
         {
-            //DisplayTheDaysWeather();
+            DisplayTheDaysWeather();
             StoreVisit();
             RecipeCreation();
         }
+
         private void DisplayTheDaysWeather()
         {
-
+            day = new Day();
+            day.WeatherChooser();
+            Console.ReadLine();
         }
+
         private void StoreVisit()
         {
             Console.WriteLine("Welcome to my general store what would you like to buy?");
@@ -118,7 +112,7 @@ namespace LemonadeStand_3DayStarter
                     store.SellLemons(player1);
                     Console.WriteLine("\n");
                     Console.WriteLine("Here is your updated inventory and wallet " + player1.name + ": ");
-                    DisplayCurrentInventoryAndMoney();
+                    UserInterface.DisplayCurrentInventoryAndMoney(player1);
                     Console.Clear();
                     PurchasingProducts();
                     break;
@@ -126,7 +120,7 @@ namespace LemonadeStand_3DayStarter
                     store.SellSugarCubes(player1);
                     Console.WriteLine("\n");
                     Console.WriteLine("Here is your updated inventory and wallet " + player1.name + ": ");
-                    DisplayCurrentInventoryAndMoney();
+                    UserInterface.DisplayCurrentInventoryAndMoney(player1);
                     Console.Clear();
                     PurchasingProducts();
                     break;
@@ -134,7 +128,7 @@ namespace LemonadeStand_3DayStarter
                     store.SellIceCubes(player1);
                     Console.WriteLine("\n");
                     Console.WriteLine("Here is your updated inventory and wallet " + player1.name + ": ");
-                    DisplayCurrentInventoryAndMoney();
+                    UserInterface.DisplayCurrentInventoryAndMoney(player1);
                     Console.Clear();
                     PurchasingProducts();
                     break;
@@ -142,7 +136,7 @@ namespace LemonadeStand_3DayStarter
                     store.SellCups(player1);
                     Console.WriteLine("\n");
                     Console.WriteLine("Here is your updated inventory and wallet " + player1.name + ": ");
-                    DisplayCurrentInventoryAndMoney();
+                    UserInterface.DisplayCurrentInventoryAndMoney(player1);
                     Console.Clear();
                     PurchasingProducts();
                     break;
@@ -158,16 +152,14 @@ namespace LemonadeStand_3DayStarter
             }
         }
         
-        private void SettingUpTheDay()//This just brings the elements together to run in the mid game simulation
-        {
-
-        }
         private void RecipeCreation()
         {
-            Recipe newRecipe = new Recipe();
-            newRecipe.CreateRecipe(player1);
-            DisplayCurrentInventoryAndMoney();
+
+            UserInterface.DisplayCurrentInventoryAndMoney(player1);
         }
+
+
+
 
         private void EndGame()//Wraps the game up and displays what the player made
         {
@@ -177,6 +169,7 @@ namespace LemonadeStand_3DayStarter
         {
             BeginGame();
             MidGame();
+            //EndGame();
         }
         private void PlayAgain()//Play again?
         {

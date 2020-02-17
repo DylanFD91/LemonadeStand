@@ -14,9 +14,9 @@ namespace LemonadeStand_3DayStarter
         public int iceCubesUsed;
 
         // constructor (SPAWNER)
-        public Recipe()
+        public Recipe(Player player)
         {
-
+            CreateRecipe(player);
         }
 
         // member methods (CAN DO)
@@ -26,10 +26,10 @@ namespace LemonadeStand_3DayStarter
             LemonsForRecipe(player);
 
             Console.WriteLine("How many Sugar Cubes would you like to use?");
-            SugarForRecipe();
+            SugarForRecipe(player);
 
             Console.WriteLine("How many Ice Cubes would you like to use?");
-            IceForRecipe();
+            IceForRecipe(player);
         }
 
         public void LemonsForRecipe(Player player)

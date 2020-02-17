@@ -11,10 +11,11 @@ namespace LemonadeStand_3DayStarter
         // member variables (HAS A)
         //public List<Pitcher> pitchers;
         public int cupsRemaining;
-
+        Recipe newRecipe;
         // constructor (SPAWNER)
-        public Pitcher()
+        public Pitcher(Player player)
         {
+            newRecipe = new Recipe(player);
             cupsRemaining = 25;
         }
 

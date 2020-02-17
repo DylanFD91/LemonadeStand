@@ -12,7 +12,6 @@ namespace LemonadeStand_3DayStarter
         {
                 SimulateProgram newGame = new SimulateProgram();
                 newGame.RunGame();
-
         }
     }
 }

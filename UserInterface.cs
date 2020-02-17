@@ -23,5 +23,17 @@ namespace LemonadeStand_3DayStarter
 
             return quantityOfItem;
         }
+        public static void DisplayCurrentInventoryAndMoney(Player player)//Displays the wallet and inventory of the player
+        {
+            Console.WriteLine("Wallet: $" + player.wallet.Money);
+            Console.WriteLine("Inventory: ");
+            Console.WriteLine("Lemons: " + player.inventory.lemons.Count);
+            Console.WriteLine("Sugar Cubes: " + player.inventory.sugarCubes.Count);
+            Console.WriteLine("Ice Cubes: " + player.inventory.iceCubes.Count);
+            Console.WriteLine("Cups: " + player.inventory.cups.Count);
+            Console.ReadLine();
+        }
+
+
     }
 }
