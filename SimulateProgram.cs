@@ -14,6 +14,9 @@ namespace LemonadeStand_3DayStarter
         Store store = new Store();
         Day day;
         Pitcher pitcher;
+        Customer customer;
+        List<Customer> customers;
+        public int profitMade = 0;
 
         //Constructor(IS A)
         public SimulateProgram()
@@ -84,9 +87,18 @@ namespace LemonadeStand_3DayStarter
         
         private void MidGame()//Has the methods for the core of the game
         {
-            DisplayTheDaysWeather();
-            StoreVisit();
-            RecipeCreation();
+            int inGameDays = 7;
+            do
+            {
+                DisplayTheDaysWeather();
+                StoreVisit();
+                RecipeCreation();
+                CustomersForDayCreation();
+
+
+
+                DailyProfitMade();
+            } while (inGameDays >= 0);
         }
 
         private void DisplayTheDaysWeather()
@@ -154,12 +166,25 @@ namespace LemonadeStand_3DayStarter
         
         private void RecipeCreation()
         {
-
+            pitcher = new Pitcher(player1);
             UserInterface.DisplayCurrentInventoryAndMoney(player1);
         }
 
+        private void CustomersForDayCreation()
+        {
+            customers = new List<Customer>();
+            int howManyCustomersToday = new Random().Next(1, 21);
+            for (int i = 0; i < howManyCustomersToday; i++)
+            {
+                customer = new Customer();
+                customers.Add(customer);
+            }
+        }
 
+        private void DailyProfitMade()
+        {
 
+        }
 
         private void EndGame()//Wraps the game up and displays what the player made
         {
