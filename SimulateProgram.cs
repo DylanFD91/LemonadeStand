@@ -10,31 +10,32 @@ namespace LemonadeStand_3DayStarter
     {
         //Methods(HAS A)
         Player player1;
-        Store store = new Store();
         Day day;
         Pitcher pitcher;
         Customer customer;
+        Store store = new Store();
         List<Customer> customers;
         public double profitMade = 0;
         public double dailyProfitMade = 0;
         public double lemonadePrice = 0;
         public int inGameDays = 1;
 
-
         //Constructor(IS A)
         public SimulateProgram()
         {
 
         }
+
         //Methods(CAN DO)
-
-        //Frequent used Methods
-
         private void BeginGame()//Only runs the beginning methods
         {
             UserInterface.WelcomeToGame();
             UserInterface.DisplayRules();
             HowManyPlayers();
+
+            //UserInterface.GameMenu(player1, day, store);
+
+
             Console.WriteLine("Here is your current inventory and starting cash " + player1.name + ": ");
             UserInterface.DisplayCurrentInventoryAndMoney(player1);
             Console.WriteLine("\nSince your inventory is empty lets head to the store...");
@@ -87,7 +88,7 @@ namespace LemonadeStand_3DayStarter
             }
         }
 
-        private void StoreVisit()
+        public void StoreVisit()
         {
             Console.WriteLine("Welcome to my general store what would you like to buy?");
             PurchasingProducts();
@@ -95,7 +96,7 @@ namespace LemonadeStand_3DayStarter
         private void PurchasingProducts()
         {
             Console.WriteLine("\n(please type in the name of the product from the list, if nothing or done type Exit)");
-            UserInterface.StorePriceList(store);
+            UserInterface.DisplayStorePriceList(store);
             string input = Console.ReadLine().ToUpper();
             switch (input)
             {
@@ -184,7 +185,6 @@ namespace LemonadeStand_3DayStarter
             }
         }
 
-
         private void SellingLemonade()
         {
             Console.WriteLine("Lets start our day!");
@@ -225,7 +225,7 @@ namespace LemonadeStand_3DayStarter
             UserInterface.DisplayCurrentInventoryAndMoney(player1);
         }
 
-        private void EndGame()//Wraps the game up and displays what the player made
+        public void EndGame()//Wraps the game up and displays what the player made
         {
             Console.WriteLine("You've reached the end this is how much you made entirely: " + profitMade);
             Console.ReadLine();
