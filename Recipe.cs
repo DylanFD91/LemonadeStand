@@ -43,6 +43,11 @@ namespace LemonadeStand_3DayStarter
                     Console.WriteLine(lemonsUsed + " will be used for this recipe");
                     LemonsUsedFromInventory(player);
                 }
+                else if (lemonsUsed == 0)
+                {
+                    Console.WriteLine("You need to use some ingredients please try again.");
+                    LemonsForRecipe(player);
+                }
                 else
                 {
                     Console.WriteLine(lemonsUsed + " is to many lemons compared to your inventory please try again.");

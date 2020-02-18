@@ -25,17 +25,17 @@ namespace LemonadeStand_3DayStarter
             if (weatherRandomizer == 1)
             {
                 MakeRainy();
-                Console.WriteLine("The weather today will be Rainy and the temperature will be " + temperature + ".");
+                Console.WriteLine("The weather today will be Rainy and the temperature will be " + temperature + " F°.");
             }
             else if (weatherRandomizer == 2)
             {
                 MakeCloudy();
-                Console.WriteLine("The weather today will be Cloudy and the temperature will be " + temperature + ".");
+                Console.WriteLine("The weather today will be Cloudy and the temperature will be " + temperature + " F°.");
             }
             else
             {
                 MakeSunny();
-                Console.WriteLine("The weather today will be Sunny and the temperature will be " + temperature + ".");
+                Console.WriteLine("The weather today will be Sunny and the temperature will be " + temperature + " F°.");
             }
         }
         private void MakeSunny()

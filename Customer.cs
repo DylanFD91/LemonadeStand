@@ -21,11 +21,7 @@ namespace LemonadeStand_3DayStarter
 
         public void ChanceToBuy()
         {
-            chanceToBuy = random.Next(40, 60);
-        }
-        public void Purchase()
-        {
-
+            chanceToBuy = random.Next(20, 60);
         }
     }
 }
