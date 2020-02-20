@@ -12,13 +12,11 @@ namespace LemonadeStand_3DayStarter
         public int lemonsUsed;
         public int sugarCubesUsed;
         public int iceCubesUsed;
-
         // constructor (SPAWNER)
         public Recipe(Player player)
         {
             CreateRecipe(player);
         }
-
         // member methods (CAN DO)
         public void CreateRecipe(Player player)
         {
@@ -31,8 +29,7 @@ namespace LemonadeStand_3DayStarter
             Console.WriteLine("How many Ice Cubes would you like to use?");
             IceForRecipe(player);
         }
-
-        public void LemonsForRecipe(Player player)
+        private void LemonsForRecipe(Player player)
         {
             string lemonInput = Console.ReadLine();
             try
@@ -57,7 +54,7 @@ namespace LemonadeStand_3DayStarter
                     LemonsForRecipe(player);
                 }
             }
-            catch(FormatException)
+            catch (FormatException)
             {
                 Console.WriteLine($"'{lemonInput}' was not a valid amount. Please press Enter and try again...");
                 Console.ReadLine();
@@ -66,14 +63,13 @@ namespace LemonadeStand_3DayStarter
                 LemonsForRecipe(player);
             }
         }
-        public void LemonsUsedFromInventory(Player player)
+        private void LemonsUsedFromInventory(Player player)
         {
             for (int index = 0; index < lemonsUsed; lemonsUsed--)
             {
                 player.inventory.lemons.RemoveAt(0);
             }
         }
-
         public void SugarForRecipe(Player player)
         {
             string sugarInput = Console.ReadLine();
@@ -94,7 +90,7 @@ namespace LemonadeStand_3DayStarter
                     SugarForRecipe(player);
                 }
             }
-            catch(FormatException)
+            catch (FormatException)
             {
                 Console.WriteLine($"'{sugarInput}' was not a valid amount. Please press Enter and try again...");
                 Console.ReadLine();
@@ -110,7 +106,6 @@ namespace LemonadeStand_3DayStarter
                 player.inventory.sugarCubes.RemoveAt(0);
             }
         }
-
         public void IceForRecipe(Player player)
         {
             string iceInput = Console.ReadLine();
@@ -131,7 +126,7 @@ namespace LemonadeStand_3DayStarter
                     IceForRecipe(player);
                 }
             }
-            catch(FormatException)
+            catch (FormatException)
             {
                 Console.WriteLine($"'{iceInput}' was not a valid amount. Please press Enter and try again...");
                 Console.ReadLine();

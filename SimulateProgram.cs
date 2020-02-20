@@ -9,145 +9,122 @@ namespace LemonadeStand_3DayStarter
     class SimulateProgram
     {
         //Methods(HAS A)
-        Player player1;
-        Day day;
-        Pitcher pitcher;
-        Customer customer;
+        Random random = new Random();
         Store store = new Store();
         List<Customer> customers;
-        public double profitMade = 0;
-        public double dailyProfitMade = 0;
-        public double lemonadePrice = 0;
-        public int inGameDays = 1;
+        List<Day> days;
+        Player player;
+        Pitcher pitcher;
+        private double profitMade = 0;
+        private double dailyProfitMade = 0;
+        private double lemonadePrice = 0;
+        private bool recipeCreated = false;
+        private int whatDayIsIt = 1;
 
         //Constructor(IS A)
         public SimulateProgram()
         {
 
         }
-
         //Methods(CAN DO)
-        private void BeginGame()//Only runs the beginning methods
+        public void GameMenu()//Needs to have option 4 updated to start the actual sale day
         {
-            UserInterface.WelcomeToGame();
-            UserInterface.DisplayRules();
-            HowManyPlayers();
-
-            //UserInterface.GameMenu(player1, day, store);
-
-
-            Console.WriteLine("Here is your current inventory and starting cash " + player1.name + ": ");
-            UserInterface.DisplayCurrentInventoryAndMoney(player1);
-            Console.WriteLine("\nSince your inventory is empty lets head to the store...");
-            Console.ReadLine();
-            Console.Clear();
+            UserInterface.GameMenuText(player, days[whatDayIsIt - 1]);
+            string userInputForMenu = Console.ReadLine().ToLower();
+            switch (userInputForMenu)
+            {
+                case "1":
+                case "show rules":
+                case "rules":
+                    Console.Clear();
+                    UserInterface.DisplayRules();
+                    UserInterface.PressEnterToContinue();
+                    GameMenu();
+                    break;
+                case "2":
+                case "create recipe":
+                case "recipe":
+                    Console.Clear();
+                    Console.WriteLine("Going to create a recipe for the day...");
+                    recipeCreated = true;
+                    UserInterface.PressEnterToContinue();
+                    RecipeCreation();
+                    GameMenu();
+                    break;
+                case "3":
+                case "go to store":
+                case "store":
+                    Console.WriteLine("Heading to the store...");
+                    UserInterface.PressEnterToContinue();
+                    store.StoreVisit(player);
+                    GameMenu();
+                    break;
+                case "4":
+                case "start your day":
+                case "day":
+                    WasARecipeCreated();
+                    break;
+                case "5":
+                case "skip today":
+                case "skip":
+                    Console.WriteLine("Skipping Day...");
+                    UserInterface.PressEnterToContinue();
+                    break;
+                case "6":
+                case "exit game":
+                case "exit":
+                    Console.WriteLine("Exiting Game...");
+                    UserInterface.PressEnterToContinue();
+                    System.Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("That was not proper input");
+                    UserInterface.PressEnterToContinue();
+                    GameMenu();
+                    break;
+            }
         }
         private void HowManyPlayers()//Asks the user how many players they want to have
         {
-            Console.WriteLine("One or Two Players? The second player will be an AI...(Please Type 1 or 2)");
+            UserInterface.HowManyPlayersText();
             string input = Console.ReadLine();
             switch (input)
             {
                 case "1":
-                    player1 = new Player();
-                    Console.WriteLine("\nWelcome " + player1.name + "! Press Enter to Continue...");
-                    Console.ReadLine();
+                    player = new Player();
+                    Console.WriteLine("\nWelcome " + player.name + ", to the Lemonade Stand Game!");
+                    UserInterface.PressEnterToContinue();
                     break;
                 default:
                     Console.Clear();
                     Console.WriteLine("That was not a valid response, please press enter try again.");
-                    Console.ReadLine();
+                    UserInterface.PressEnterToContinue();
                     HowManyPlayers();
                     break;
             }
-            Console.Clear();
         }
-        
-        private void MidGame()//Has the methods for the core of the game
+        private void HowManyDaysToPlay()
         {
-            if (inGameDays != 7)
+            days = new List<Day>();
+            int howManyDaysChosen = UserInterface.HowManyDaysUserValidation();
+            for (int i = 0; i < howManyDaysChosen; i++)
             {
-                UserInterface.DisplayDaysWeather(day);
-                StoreVisit();
-                RecipeCreation();
-                CustomersForDayCreation();
-
-                SellingLemonade();
-
-                inGameDays++;
-                DailyProfitMade();
-                Console.ReadLine();
-                dailyProfitMade = 0;
-                lemonadePrice = 0;
-                Console.Clear();
-                MidGame();
+                Day day = new Day(random);
+                days.Add(day);
             }
-            else
-            {
-                Console.WriteLine("You've completed the Week!");
-            }
+            Console.WriteLine("Number of Days you will play is: " + days.Count);
         }
-
-        public void StoreVisit()
+        private void BeginGame()//Only runs the beginning methods for setup only.
         {
-            Console.WriteLine("Welcome to my general store what would you like to buy?");
-            PurchasingProducts();
+            UserInterface.WelcomeToGame();
+            UserInterface.DisplayRules();
+            HowManyPlayers();
+            HowManyDaysToPlay();
         }
-        private void PurchasingProducts()
-        {
-            Console.WriteLine("\n(please type in the name of the product from the list, if nothing or done type Exit)");
-            UserInterface.DisplayStorePriceList(store);
-            string input = Console.ReadLine().ToUpper();
-            switch (input)
-            {
-                case "LEMONS":
-                    store.SellLemons(player1);
-                    Console.WriteLine("\n");
-                    Console.WriteLine("Here is your updated inventory and wallet " + player1.name + ": ");
-                    UserInterface.DisplayCurrentInventoryAndMoney(player1);
-                    Console.Clear();
-                    PurchasingProducts();
-                    break;
-                case "SUGAR CUBES":
-                    store.SellSugarCubes(player1);
-                    Console.WriteLine("\n");
-                    Console.WriteLine("Here is your updated inventory and wallet " + player1.name + ": ");
-                    UserInterface.DisplayCurrentInventoryAndMoney(player1);
-                    Console.Clear();
-                    PurchasingProducts();
-                    break;
-                case "ICE CUBES":
-                    store.SellIceCubes(player1);
-                    Console.WriteLine("\n");
-                    Console.WriteLine("Here is your updated inventory and wallet " + player1.name + ": ");
-                    UserInterface.DisplayCurrentInventoryAndMoney(player1);
-                    Console.Clear();
-                    PurchasingProducts();
-                    break;
-                case "CUPS":
-                    store.SellCups(player1);
-                    Console.WriteLine("\n");
-                    Console.WriteLine("Here is your updated inventory and wallet " + player1.name + ": ");
-                    UserInterface.DisplayCurrentInventoryAndMoney(player1);
-                    Console.Clear();
-                    PurchasingProducts();
-                    break;
-                case "EXIT":
-                    Console.WriteLine("\nThankyou for coming see you again soon!");
-                    Console.ReadLine();
-                    break;
-                default:
-                    Console.Clear();
-                    Console.WriteLine("That was invalid user input please try again...");
-                    PurchasingProducts();
-                    break;
-            }
-        }
-        
         private void RecipeCreation()
         {
-            pitcher = new Pitcher(player1);
-            UserInterface.DisplayCurrentInventoryAndMoney(player1);
+            pitcher = new Pitcher(player);
+            UserInterface.DisplayCurrentInventoryAndMoney(player);
             SetLemonadePrice();
         }
         private void SetLemonadePrice()
@@ -160,22 +137,34 @@ namespace LemonadeStand_3DayStarter
                 userInputIsAnDouble = Double.TryParse(Console.ReadLine(), out lemonadePrice);
             }
         }
-
+        private void WasARecipeCreated()
+        {
+            if (recipeCreated == false)
+            {
+                Console.WriteLine("You need to create a recipe first! Heading back to Game Menu...");
+                UserInterface.PressEnterToContinue();
+                GameMenu();
+            }
+            else
+            {
+                Console.WriteLine("Starting the Day...");
+                UserInterface.PressEnterToContinue();
+                SellingLemonade();
+            }
+        }
         private void CustomersForDayCreation()
         {
             customers = new List<Customer>();
-            int customerCreationRandom = new Random().Next(1, 21);
+            int customerCreationRandom = random.Next(1, 21);
             for (int i = 0; i < customerCreationRandom; i++)
             {
-                customer = new Customer();
+                Customer customer = new Customer(random);
                 customers.Add(customer);
             }
-            CustomerPurchaseChanceModify();
-            Console.WriteLine("Number of customers today is: " + customers.Count);
         }
-        private void CustomerPurchaseChanceModify()
+        private void CustomerPurchaseChanceModify(Customer customer)
         {
-            if (day.condition == "Sunny")
+            if (days[whatDayIsIt - 1].condition == "Sunny")
             {
                 customer.chanceToBuy += 30;
             }
@@ -184,22 +173,24 @@ namespace LemonadeStand_3DayStarter
                 customer.chanceToBuy -= 10;
             }
         }
-
         private void SellingLemonade()
         {
             Console.WriteLine("Lets start our day!");
+            Console.WriteLine("Number of customers today is: " + customers.Count);
             foreach (Customer customer in customers)
             {
-                if(pitcher.cupsRemaining >= 1)
+                CustomerPurchaseChanceModify(customer);
+                ThatsToMuchMan(customer);
+                if (pitcher.cupsRemaining >= 1)
                 {
                     if (customer.chanceToBuy >= 40)
                     {
-                        if (player1.inventory.cups.Count >= 1)
+                        if (player.inventory.cups.Count >= 1)
                         {
                             Console.WriteLine("Ill take a cup of lemonade.");
                             pitcher.cupsRemaining -= 1;
-                            player1.inventory.cups.RemoveAt(0);
-                            player1.wallet.money += lemonadePrice;
+                            player.inventory.cups.RemoveAt(0);
+                            player.wallet.money += lemonadePrice;
                             dailyProfitMade += lemonadePrice;
                             profitMade += lemonadePrice;
                         }
@@ -222,9 +213,32 @@ namespace LemonadeStand_3DayStarter
         private void DailyProfitMade()
         {
             Console.WriteLine("You made " + dailyProfitMade + " today, good job!");
-            UserInterface.DisplayCurrentInventoryAndMoney(player1);
+            Console.ReadLine();
         }
+        private void ThatsToMuchMan(Customer customer)
+        {
+            if (lemonadePrice >= 3.01)
+            {
+                customer.chanceToBuy = 0;
+            }
+        }
+        private void MidGame()//Has the methods for the core of the game
+        {
+            foreach (Day day in days)
+            {
+                CustomersForDayCreation();
+                GameMenu();
 
+
+                DailyProfitMade();
+                dailyProfitMade = 0;
+                lemonadePrice = 0;
+                recipeCreated = false;
+                whatDayIsIt++;
+                UserInterface.PressEnterToContinue();
+            }
+            Console.WriteLine("You've completed the game!");
+        }
         public void EndGame()//Wraps the game up and displays what the player made
         {
             Console.WriteLine("You've reached the end this is how much you made entirely: " + profitMade);
@@ -235,10 +249,6 @@ namespace LemonadeStand_3DayStarter
             BeginGame();
             MidGame();
             EndGame();
-        }
-        private void PlayAgain()//Play again?
-        {
-
         }
     }
 }

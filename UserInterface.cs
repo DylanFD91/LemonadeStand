@@ -25,14 +25,14 @@ namespace LemonadeStand_3DayStarter
         }
         public static void DisplayCurrentInventoryAndMoney(Player player)//Displays the wallet and inventory of the player
         {
-            Console.WriteLine("\n-----------------------");
-            Console.WriteLine("Wallet: $" + player.wallet.Money);
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("Wallet: $" + player.wallet.Money + "\n");
             Console.WriteLine("Inventory: ");
             Console.WriteLine("Lemons: " + player.inventory.lemons.Count);
             Console.WriteLine("Sugar Cubes: " + player.inventory.sugarCubes.Count);
             Console.WriteLine("Ice Cubes: " + player.inventory.iceCubes.Count);
             Console.WriteLine("Cups: " + player.inventory.cups.Count);
-            Console.WriteLine("-----------------------\n");
+            Console.WriteLine("-----------------------");
         }
         public static void DisplayStorePriceList(Store store)//Displays the price list of the store
         {
@@ -50,86 +50,57 @@ namespace LemonadeStand_3DayStarter
             Console.WriteLine("|Welcome to the Lemonade Stand game!|");
             Console.WriteLine("-------------------------------------");
         }
-        public static void DisplayRules()
+        public static void DisplayRules()//Displays the rules and can be called from game menu
         {
-            Console.WriteLine("you run a lemonade stand and you can buy supplies from a local store, try to sell as much as you can in seven days.");
-            UserInterface.PressEnterToContinue();
+            Console.WriteLine("\nyou run a lemonade stand and you can buy supplies from a local store, try to sell as much as you can in seven days.\n");
         }
-        public static void PressEnterToContinue()
+        public static void PressEnterToContinue()//A console clear and readline output
         {
             Console.WriteLine("\n----------------------------");
             Console.WriteLine("Press (Enter) to continue...");
             Console.WriteLine("----------------------------\n");
             Console.ReadLine();
+            Console.Clear();
         }
-        public static void DisplayDaysWeather(Day day)//Randomly chooses weather and outputs the current status of the day.
-        {
-            day = new Day();
-            day.WeatherChooser();
-            UserInterface.PressEnterToContinue();
-        }
-        public static void GameMenu(Player player, Day day, Store store, SimulateProgram simulateProgram)
+        public static void GameMenuText(Player player, Day days)//Text for the game menu method in simulate program
         {
             Console.Clear();
-            Console.WriteLine("\nHello " + player.name + " and welcome to your game menu." +
-                              "You can see updated information such as weather and " +
-                              "store costs. Use the number commands shown below or you" +
-                              " can type the command to do any of the activities.\n");
+            Console.WriteLine("\nHello " + player.name + " and welcome to your game menu. Use the number\n" +
+                              "commands shown below or you can type the command to do any of the activities\n");
+            UserInterface.DisplayCurrentDay(days);
             UserInterface.DisplayCurrentInventoryAndMoney(player);
-            UserInterface.DisplayDaysWeather(day);
-            UserInterface.DisplayStorePriceList(store);
-            Console.WriteLine("(1) Show Rules" +
-                              "(2) Go to Store" +
-                              "(3) Start your Day" +
-                              "(4) Skip Today" +
-                              "(5) Exit Game\n");
-            string userInputForMenu = Console.ReadLine().ToLower();
-            switch (userInputForMenu)
-            {
-                case "1":
-                case "show rules":
-                case "rules":
-                    Console.Clear();
-                    UserInterface.DisplayRules();
-                    UserInterface.PressEnterToContinue();
-                    UserInterface.GameMenu(player, day, store, simulateProgram);
-                    break;
-                case "2":
-                case "go to store":
-                case "store":
-                    Console.WriteLine("Heading to the store...");
-                    UserInterface.PressEnterToContinue();
-                    simulateProgram.StoreVisit();
-                    break;
-                case "3":
-                case "start your day":
-                case "day":
-                    Console.WriteLine("Starting the Day...");
-                    UserInterface.PressEnterToContinue();
-                    break;
-                case "4":
-                case "skip today":
-                case "skip":
-                    Console.WriteLine("Skipping Day...");
-                    simulateProgram.inGameDays++;
-                    UserInterface.PressEnterToContinue();
-                    break;
-                case "5":
-                case "exit game":
-                case "exit":
-                    Console.WriteLine("Exiting Game...");
-                    Console.Clear();
-                    System.Environment.Exit(0);
-                    UserInterface.PressEnterToContinue();
-                    break;
-                default:
-                    Console.WriteLine("That was not proper input");
-                    UserInterface.PressEnterToContinue();
-                    UserInterface.GameMenu(player, day, store, simulateProgram);
-                    break;
-            }
+            Console.WriteLine("(1) Show Rules\n" +
+                              "(2) Create Recipe\n" +
+                              "(3) Go to Store\n" +
+                              "(4) Start your Day\n" +
+                              "(5) Skip Today\n" +
+                              "(6) Exit Game\n");
         }
-
-
+        public static void HowManyPlayersText()//Filler text for how many players
+        {
+            Console.WriteLine("\n---------------------------------");
+            Console.WriteLine("|       How Many Players?       |");
+            Console.WriteLine("|Please Type 1 other options N/A|");
+            Console.WriteLine("---------------------------------\n");
+        }
+        public static void HowManyDaysToPlayText()//Filler text for day amount method
+        {
+            Console.WriteLine("How many days would you like to play?");
+        }
+        public static int HowManyDaysUserValidation()//Verify user input for days wanting to play
+        {
+            bool isInputAnInt = false;
+            int howManyDaysChosen = 0;
+            while (!isInputAnInt)
+            {
+                Console.WriteLine("How many days would you like to play?");
+                isInputAnInt = Int32.TryParse(Console.ReadLine(), out howManyDaysChosen);
+            }
+            return howManyDaysChosen;
+        }
+        public static void DisplayCurrentDay(Day day)//outputs the current status of the day.
+        {
+            Console.WriteLine("It's Day " + day.dayNumber + ", it's currently " + day.temperature + "F°, and " + day.condition + ".");
+        }
     }
 }

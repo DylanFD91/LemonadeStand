@@ -10,18 +10,19 @@ namespace LemonadeStand_3DayStarter
     {
         // member variables (HAS A)
         public int chanceToBuy;
-        Random random = new Random();
+        Random random;
 
 
         // constructor (SPAWNER)
-        public Customer()
+        public Customer(Random random)
         {
+            this.random = random;
             ChanceToBuy();
         }
 
         public void ChanceToBuy()
         {
-            chanceToBuy = random.Next(20, 60);
+            chanceToBuy = random.Next(1, 101);
         }
     }
 }
