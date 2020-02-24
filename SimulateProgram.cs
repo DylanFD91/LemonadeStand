@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LemonadeStand_3DayStarter
 {
-    class SimulateProgram
+    public class SimulateProgram
     {
         //Methods(HAS A)
         Random random = new Random();
@@ -20,6 +20,10 @@ namespace LemonadeStand_3DayStarter
         private double lemonadePrice = 0;
         private bool recipeCreated = false;
         private int whatDayIsIt = 1;
+
+
+
+
 
         //Constructor(IS A)
         public SimulateProgram()
@@ -84,7 +88,7 @@ namespace LemonadeStand_3DayStarter
                     break;
             }
         }
-        private void HowManyPlayers()//Asks the user how many players they want to have
+        public void HowManyPlayers()//Asks the user how many players they want to have
         {
             UserInterface.HowManyPlayersText();
             string input = Console.ReadLine();
@@ -103,7 +107,7 @@ namespace LemonadeStand_3DayStarter
                     break;
             }
         }
-        private void HowManyDaysToPlay()
+        public void HowManyDaysToPlay()
         {
             days = new List<Day>();
             int howManyDaysChosen = UserInterface.HowManyDaysUserValidation();
@@ -127,7 +131,7 @@ namespace LemonadeStand_3DayStarter
             UserInterface.DisplayCurrentInventoryAndMoney(player);
             SetLemonadePrice();
         }
-        private void SetLemonadePrice()
+        private void SetLemonadePrice() //Single responsability here. its only purpose is to set the price of lemonade for the day.
         {
             bool userInputIsAnDouble = false;
             while (!userInputIsAnDouble)
@@ -137,7 +141,7 @@ namespace LemonadeStand_3DayStarter
                 userInputIsAnDouble = Double.TryParse(Console.ReadLine(), out lemonadePrice);
             }
         }
-        private void WasARecipeCreated()
+        private void WasARecipeCreated() //Single responsability here. Its only purpose is to make sure the player had created a recipe for each day.
         {
             if (recipeCreated == false)
             {
